@@ -4,11 +4,11 @@
 
 
 ArrayUtil create(int typeSize, int length){
-		ArrayUtil *arr = (ArrayUtil *)calloc(length,length*typeSize);
-		arr->base = (char *)arr;
-		arr->typeSize = typeSize;
-		arr->length = length;	
-		return *arr;
+		ArrayUtil *util_arr = (ArrayUtil *)calloc(length,length*typeSize);
+		util_arr->base = (char *)util_arr;
+		util_arr->typeSize = typeSize;
+		util_arr->length = length;	
+		return *util_arr;
 };
 
 int areEqual(ArrayUtil a,ArrayUtil b){
