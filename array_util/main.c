@@ -12,8 +12,8 @@ void test_resize_array(ArrayUtil resize_util){
 	assert(resize_util.typeSize == 1);
 };
 
-void test_equal_array(int equal){
-	assert(equal);
+void test_equal_array(int equal_arr){
+	assert(equal_arr);
 };
 
 void test_not_equal_array(int not_equal){
