@@ -103,3 +103,26 @@ void test_find_last(){
 	int *last2 = (int *)find_last(util_a, isDivisible, hint1);
 	assert(*last2 == 27);
 };
+
+void count_element_test(){
+	ArrayUtil util = create(4,8);
+	int a = 9, b = 12, c = 40, d = 2, e = 19, f = 27, g = 15;
+	insert_element(&util,&a,0);
+	insert_element(&util,&b,1);
+	insert_element(&util,&c,2);
+	insert_element(&util,&d,4);
+	insert_element(&util,&e,3); 
+	insert_element(&util,&f,6);
+	insert_element(&util,&f,7);
+
+
+	void *hint = NULL;
+	int sum_of_match_element  = count(util, isEven, hint);
+	assert(sum_of_match_element == 3);
+
+	int number = 3;
+	void *hint1 = &number;
+	int sum_of_divisible_element = count(util, isDivisible, hint1);
+	assert(sum_of_divisible_element == 4);
+
+}

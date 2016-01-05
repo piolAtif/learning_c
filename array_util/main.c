@@ -11,6 +11,7 @@ int main(){
 	find_index_test();
 	test_find_first();
 	test_find_last();
+	count_element_test();
 
 	return 0;
 }

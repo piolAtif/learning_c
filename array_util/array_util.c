@@ -82,7 +82,7 @@ int isDivisible(void *hint, void *item){
 
 int count(ArrayUtil util, MatchFunc match, void * hint){
 	void *item;
-	int count;
+	int count = 0;
 	for (int i = 0; i < util.length; i++)
 	{
 		item = util.base+(i*util.typeSize);
@@ -91,4 +91,4 @@ int count(ArrayUtil util, MatchFunc match, void * hint){
 		}
 	}
 	return count;
-}
+};
