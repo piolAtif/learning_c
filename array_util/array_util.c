@@ -41,5 +41,28 @@ int find_index(ArrayUtil util,void *element){
 			return i;
 	}
 	return -1;
-}
+};
+
+void *find_first(ArrayUtil util, MatchFunc match, void *hint){
+	for (int i = 0; i < util.length; ++i)
+	{
+		void *item = util.base+(i*util.typeSize);
+		if (match(hint, item))
+		{
+			return item;
+		}
+	}
+	return NULL;
+};
+
+int isEven(void *hint, void *item){
+	int number = *(int *)item;
+	return (number%2 == 0);
+};
+
+int isDivisible(void *hint, void *item){
+	int dividend = *(int *)item;
+	int divisor = *(int *)hint;
+	return (dividend%divisor == 0); 
+};
 
