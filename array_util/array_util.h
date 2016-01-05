@@ -7,3 +7,4 @@ typedef struct{
 int areEqual(ArrayUtil, ArrayUtil);
 ArrayUtil create(int, int);
 ArrayUtil resize(ArrayUtil *, int);
+void dispose(ArrayUtil *);

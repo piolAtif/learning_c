@@ -5,7 +5,7 @@
 
 ArrayUtil create(int typeSize, int length){
 		ArrayUtil *util_arr = (ArrayUtil *)calloc(length,length*typeSize);
-		util_arr->base = (char *)util_arr;
+		util_arr->base = (void *)util_arr;
 		util_arr->typeSize = typeSize;
 		util_arr->length = length;	
 		return *util_arr;
@@ -23,6 +23,12 @@ ArrayUtil resize(ArrayUtil *util, int len){
 	util->length = len;
 	return *util;
 };
+
+void dispose(ArrayUtil *util){
+	free(util->base);
+	util->base = NULL;
+};
+
 
 
 
