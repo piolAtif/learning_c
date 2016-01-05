@@ -79,3 +79,16 @@ int isDivisible(void *hint, void *item){
 	if(dividend == 0)return 0;
 	return (dividend%divisor == 0); 
 };
+
+int count(ArrayUtil util, MatchFunc match, void * hint){
+	void *item;
+	int count;
+	for (int i = 0; i < util.length; i++)
+	{
+		item = util.base+(i*util.typeSize);
+		if(match(hint, item)){
+			count++;
+		}
+	}
+	return count;
+}
