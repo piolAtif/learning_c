@@ -9,6 +9,7 @@ int main(){
 	test_not_equal_array();
 	test_dispose();
 	find_index_test();
+	test_find_first();
 
 	return 0;
 }

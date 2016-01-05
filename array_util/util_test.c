@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <assert.h>
 #include "array_util.h"
 
@@ -61,3 +62,26 @@ void find_index_test(){
 	assert(index3 == 1);
 
 };
+
+void test_find_first(){
+	ArrayUtil util_a = create(4,7);
+	int a = 9, b = 12, c = 40, d = 2, e = 19, f = 27;
+	insert_element(&util_a,&a,0);
+	insert_element(&util_a,&b,1);
+	insert_element(&util_a,&c,2);
+	insert_element(&util_a,&d,4);
+	insert_element(&util_a,&e,3);
+	insert_element(&util_a,&f,6);
+
+	void *hint = NULL;
+
+	int *first = (int *)find_first(util_a, isEven, hint);
+	assert(*first == 12);
+
+	int number = 5;
+	void *hint1 = &number;
+	int *second = (int *)find_first(util_a, isDivisible, hint1);
+	assert(*second == 40);
+
+};
+
