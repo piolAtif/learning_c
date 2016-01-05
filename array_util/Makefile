@@ -1,4 +1,3 @@
-compile: main.c array_util.c
-	gcc main.c array_util.c -o util
-run: util
-	./util
+compile: main.c array_util.c util_test.c
+	gcc main.c array_util.c util_test.c -o util
+
