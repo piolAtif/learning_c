@@ -10,6 +10,7 @@ int main(){
 	test_dispose();
 	find_index_test();
 	test_find_first();
+	test_find_last();
 
 	return 0;
 }

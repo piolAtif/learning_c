@@ -85,3 +85,21 @@ void test_find_first(){
 
 };
 
+void test_find_last(){
+	ArrayUtil util_a = create(4,7);
+	int a = 9, b = 12, c = 40, d = 2, e = 19, f = 27;
+	insert_element(&util_a,&a,0);
+	insert_element(&util_a,&b,1);
+	insert_element(&util_a,&c,2);
+	insert_element(&util_a,&d,4);
+	insert_element(&util_a,&e,3);
+	insert_element(&util_a,&f,6);
+
+	void *hint = NULL;
+	int *last1 = (int *)find_last(util_a, isEven, hint);
+	assert(*last1 == 2); 
+	int number = 3;
+	void *hint1 = &number;
+	int *last2 = (int *)find_last(util_a, isDivisible, hint1);
+	assert(*last2 == 27);
+};
