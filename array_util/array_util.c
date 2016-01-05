@@ -55,14 +55,27 @@ void *find_first(ArrayUtil util, MatchFunc match, void *hint){
 	return NULL;
 };
 
+void *find_last(ArrayUtil util, MatchFunc match, void *hint){
+	void *item;
+	for (int i = util.length; i > 0 ; i--)
+	{
+		item = util.base+(i*util.typeSize);
+		if(match(hint, item)){
+			return item;
+		}
+	}
+	return NULL;
+};
+
 int isEven(void *hint, void *item){
 	int number = *(int *)item;
+	if(number == 0) return 0;
 	return (number%2 == 0);
 };
 
 int isDivisible(void *hint, void *item){
 	int dividend = *(int *)item;
 	int divisor = *(int *)hint;
+	if(dividend == 0)return 0;
 	return (dividend%divisor == 0); 
 };
-

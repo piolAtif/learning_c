@@ -14,5 +14,6 @@ void dispose(ArrayUtil *);
 void insert_element(ArrayUtil *, void *, int);
 int find_index(ArrayUtil , void *);
 void *find_first(ArrayUtil, MatchFunc , void *);
+void *find_last(ArrayUtil, MatchFunc, void *);
 int isEven(void *, void *);
 int isDivisible(void *, void *);
