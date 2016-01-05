@@ -20,6 +20,11 @@ void test_not_equal_array(int not_equal){
 	assert(!not_equal);
 };
 
+void test_dispose(ArrayUtil util, ArrayUtil pre_util){
+	assert(util.base != pre_util.base);
+	assert(util.base == NULL);
+}
+
 int main(){
 	ArrayUtil util_a = create(1,3);
 	test_array(util_a);
@@ -34,6 +39,11 @@ int main(){
 	ArrayUtil util_c = create(4,4);
 	int not_equal_array = areEqual(util_b,util_c);
 	test_not_equal_array(not_equal_array);
-	
+
+	ArrayUtil prev_util_a = util_a;
+	dispose(&util_a);
+
+	test_dispose(util_a, prev_util_a);
+
 	return 0;
 }
