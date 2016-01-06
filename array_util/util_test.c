@@ -1,7 +1,27 @@
 #include <stdio.h>
 #include <assert.h>
+#include <stdlib.h>
 #include "array_util.h"
 
+int isEven(void *hint, void *item){
+	int number = *(int *)item;
+	if(number == 0) return 0;
+	return (number%2 == 0);
+};
+
+int isDivisible(void *hint, void *item){
+	int dividend = *(int *)item;
+	int divisor = *(int *)hint;
+	if(dividend == 0)return 0;
+	return (dividend%divisor == 0); 
+};
+
+int isMathChar(void *hint, void *item){
+	char forMatching = *(char *)hint;
+	char toMatching = *(char *)item;
+
+	return(forMatching-toMatching == 0); 
+}
 void test_array(){
 	ArrayUtil util_a = create(1,3);
 	assert(util_a.length == 3);
@@ -35,9 +55,12 @@ void test_dispose(){
 	assert(*(int *)(util_to_dispose.base) == 0);
 };
 
-void find_index_test(){
-	ArrayUtil util_a = create(1,3);
-	resize(&util_a,7);
+
+//==========================test for integer elements array==================================
+
+
+void test_find_index_for_int(){
+	ArrayUtil util_a = create(4,7);
 	int a = 3, b = 5, c = 40, d = 2, e = 19, f = 27;
 	insert_element(&util_a,&a,0);
 	insert_element(&util_a,&b,1);
@@ -63,49 +86,52 @@ void find_index_test(){
 
 };
 
-void test_find_first(){
-	ArrayUtil util_a = create(4,7);
+void insert_element_in_util(ArrayUtil util){
 	int a = 9, b = 12, c = 40, d = 2, e = 19, f = 27;
-	insert_element(&util_a,&a,0);
-	insert_element(&util_a,&b,1);
-	insert_element(&util_a,&c,2);
-	insert_element(&util_a,&d,4);
-	insert_element(&util_a,&e,3);
-	insert_element(&util_a,&f,6);
+	insert_element(&util,&a,0);
+	insert_element(&util,&b,1);
+	insert_element(&util,&c,2);
+	insert_element(&util,&d,4);
+	insert_element(&util,&e,3);
+	insert_element(&util,&f,6);	
+};
 
+void test_find_first_if_isEven(){
+	ArrayUtil util_a = create(4,7);
+	insert_element_in_util(util_a);
 	void *hint = NULL;
-
-	int *first = (int *)find_first(util_a, isEven, hint);
+	int *first = (int *)find_first(util_a, &isEven, hint);
 	assert(*first == 12);
-
-	int number = 5;
-	void *hint1 = &number;
-	int *second = (int *)find_first(util_a, isDivisible, hint1);
-	assert(*second == 40);
-
 };
 
-void test_find_last(){
+void test_find_first_if_isDivisible(){
 	ArrayUtil util_a = create(4,7);
-	int a = 9, b = 12, c = 40, d = 2, e = 19, f = 27;
-	insert_element(&util_a,&a,0);
-	insert_element(&util_a,&b,1);
-	insert_element(&util_a,&c,2);
-	insert_element(&util_a,&d,4);
-	insert_element(&util_a,&e,3);
-	insert_element(&util_a,&f,6);
+	insert_element_in_util(util_a);
+	int number = 5;
+	void *hint = &number;
+	int *first_element = (int *)find_first(util_a, &isDivisible, hint);
+	assert(*first_element == 40);
+}
 
+
+void test_find_last_if_isEven(){
+	ArrayUtil util_a = create(4,7);
+	insert_element_in_util(util_a);
 	void *hint = NULL;
-	int *last1 = (int *)find_last(util_a, isEven, hint);
-	assert(*last1 == 2); 
-	int number = 3;
-	void *hint1 = &number;
-	int *last2 = (int *)find_last(util_a, isDivisible, hint1);
-	assert(*last2 == 27);
+	int *last = (int *)find_last(util_a, &isEven, hint);
+	assert(*last == 2);
 };
 
-void count_element_test(){
-	ArrayUtil util = create(4,8);
+void test_find_last_if_isDivisible(){
+	ArrayUtil util_a = create(4,7);
+	insert_element_in_util(util_a);
+	int number = 3;
+	void *hint = &number;
+	int *last2 = (int *)find_last(util_a, &isDivisible, hint);
+	assert(*last2 == 27);
+}; 
+
+void insert_element_for_count(ArrayUtil util){
 	int a = 9, b = 12, c = 40, d = 2, e = 19, f = 27, g = 15;
 	insert_element(&util,&a,0);
 	insert_element(&util,&b,1);
@@ -113,16 +139,112 @@ void count_element_test(){
 	insert_element(&util,&d,4);
 	insert_element(&util,&e,3); 
 	insert_element(&util,&f,6);
-	insert_element(&util,&f,7);
+	insert_element(&util,&g,7);
+};
 
+void test_count_element_if_isEven(){
+	ArrayUtil util = create(4,8);
+	insert_element_for_count(util);
+	void *hint = NULL;
+	int sum_of_match_element  = count(util, &isEven, hint);
+	assert(sum_of_match_element == 3);
+};
+
+void test_count_element_if_isDivisible(){
+	ArrayUtil util = create(4,8);
+	insert_element_for_count(util);
+	int number = 3;
+	void *hint = &number;
+	int sum_of_divisible_element = count(util, &isDivisible, hint);
+	assert(sum_of_divisible_element == 4);
+};
+
+void insert_element_for_filter(ArrayUtil util){
+	int a = 10, b = 12, c = 40, d = 2, e = 19, f = 27, g = 15;
+	insert_element(&util,&a,0);
+	insert_element(&util,&b,1);
+	insert_element(&util,&c,2);
+	insert_element(&util,&d,4);
+	insert_element(&util,&e,3); 
+	insert_element(&util,&f,6);
+	insert_element(&util,&g,7);
+};
+
+void test_filter_if_isEven(){
+	ArrayUtil util = create(4,8);
+	int maxItem = 5;
+	ArrayUtil arr = create(util.typeSize,maxItem);
+	insert_element_for_filter(util);
 
 	void *hint = NULL;
-	int sum_of_match_element  = count(util, isEven, hint);
-	assert(sum_of_match_element == 3);
+	int filter_elements = filter(util, &isEven, hint, arr.base, maxItem);
+	assert(filter_elements = 4);
+};
+
+void test_filter_if_isDivisible(){
+	ArrayUtil util = create(4,8);
+	int maxItem = 5;
+	ArrayUtil arr = create(util.typeSize,maxItem);
+	insert_element_for_filter(util);
 
 	int number = 3;
 	void *hint1 = &number;
-	int sum_of_divisible_element = count(util, isDivisible, hint1);
-	assert(sum_of_divisible_element == 4);
+	int filter_divisible_element = filter(util, &isDivisible, hint1, arr.base, maxItem);
+	assert(filter_divisible_element == 3);	
+};
+
+
+//===================================test for character elements in array=========================================
+
+void insert_element_char(ArrayUtil char_util){
+	char a ='p', b = 'q', c = 'r', d = 's', e = 't';
+	insert_element(&char_util,&a,0);
+	insert_element(&char_util,&b,1);
+	insert_element(&char_util,&c,2);
+	insert_element(&char_util,&d,3);
+	insert_element(&char_util,&e,4);
+}
+
+void test_find_index_for_char(){
+	ArrayUtil char_util = create(1,5);
+	insert_element_char(char_util);
+
+	char find = 'q';
+	void *find_ptr = &find;
+	int index = find_index(char_util, find_ptr);
+
+	assert(index == 1);
+};
+
+void insert_element_to_match(ArrayUtil char_util){
+	char a ='p', b = 'r', c = 'r', d = 's', e = 't';
+	char f ='r',g = 'q',h = 'p',i = 'u',j = 'r';
+	insert_element(&char_util,&a,0);
+	insert_element(&char_util,&b,1);
+	insert_element(&char_util,&c,2);
+	insert_element(&char_util,&d,3);
+	insert_element(&char_util,&e,4);
+	insert_element(&char_util,&f,5);
+	insert_element(&char_util,&g,6);
+	insert_element(&char_util,&h,7);
+	insert_element(&char_util,&i,8);
+	insert_element(&char_util,&j,9);
+};
+
+void test_count_match_char(){
+	ArrayUtil elements = create(1,10);
+	insert_element_to_match(elements);
+
+	char single_char = 'r';
+	void *hint = &single_char;
+	int count_char = count(elements, &isMathChar, hint);
+	assert(count_char == 4);
+
+	char second_char = 'p';
+	void *hint1 = &second_char;
+	count_char = count(elements, &isMathChar, hint1);
+	assert(count_char == 2);
 
 }
+
+

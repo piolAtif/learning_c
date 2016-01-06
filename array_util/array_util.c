@@ -43,7 +43,7 @@ int find_index(ArrayUtil util,void *element){
 	return -1;
 };
 
-void *find_first(ArrayUtil util, MatchFunc match, void *hint){
+void *find_first(ArrayUtil util, MatchFunc *match, void *hint){
 	for (int i = 0; i < util.length; ++i)
 	{
 		void *item = util.base+(i*util.typeSize);
@@ -55,7 +55,7 @@ void *find_first(ArrayUtil util, MatchFunc match, void *hint){
 	return NULL;
 };
 
-void *find_last(ArrayUtil util, MatchFunc match, void *hint){
+void *find_last(ArrayUtil util, MatchFunc *match, void *hint){
 	void *item;
 	for (int i = util.length; i > 0 ; i--)
 	{
@@ -67,20 +67,7 @@ void *find_last(ArrayUtil util, MatchFunc match, void *hint){
 	return NULL;
 };
 
-int isEven(void *hint, void *item){
-	int number = *(int *)item;
-	if(number == 0) return 0;
-	return (number%2 == 0);
-};
-
-int isDivisible(void *hint, void *item){
-	int dividend = *(int *)item;
-	int divisor = *(int *)hint;
-	if(dividend == 0)return 0;
-	return (dividend%divisor == 0); 
-};
-
-int count(ArrayUtil util, MatchFunc match, void * hint){
+int count(ArrayUtil util, MatchFunc *match, void * hint){
 	void *item;
 	int count = 0;
 	for (int i = 0; i < util.length; i++)
@@ -92,3 +79,22 @@ int count(ArrayUtil util, MatchFunc match, void * hint){
 	}
 	return count;
 };
+
+int filter(ArrayUtil util, MatchFunc *match, void * hint, void** destination, int maxItem){
+	void *item;
+	int length = 0;
+	for (int i = 0; i < util.length; ++i)
+	{
+		item = util.base+(i*util.typeSize);
+		if(match(hint ,item) && (maxItem>length)){
+		destination = item;
+			length++;
+		}	
+	}
+	return length;
+};
+
+void map(ArrayUtil, ArrayUtil, ConvertFunc *, void *){
+
+};
+
