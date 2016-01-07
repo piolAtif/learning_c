@@ -21,7 +21,32 @@ int isMathChar(void *hint, void *item){
 	char toMatching = *(char *)item;
 
 	return(forMatching-toMatching == 0); 
-}
+};
+
+void add_function(void *hint, void *source_item,void *destination_item){
+	int addend = *(int *)hint;
+	int augend = *(int *)source_item;
+	int sum = addend+augend;
+	*(int *)destination_item = sum;
+};
+
+void multiply_power(void *hint, void *item){
+	int number = *(int *)item;
+	int power = *(int *)hint;
+	int mutliplying = 1;
+	for (int i = 0; i < power; ++i)
+	{
+		mutliplying = mutliplying * number;
+	}
+	*(int *)item = mutliplying;
+};
+
+void *sum_of_element(void *hint, void *previousItem, void *item){
+	
+	*(int *)item = *(int *)item +*(int *)previousItem;
+	return item;
+;};
+
 void test_array(){
 	ArrayUtil util_a = create(1,3);
 	assert(util_a.length == 3);
@@ -193,6 +218,56 @@ void test_filter_if_isDivisible(){
 	assert(filter_divisible_element == 3);	
 };
 
+void test_int_map(){
+	ArrayUtil source_util = create(4,8);
+	insert_element_for_filter(source_util);
+
+	ArrayUtil dest_util = create(4,8);
+
+	int number = 2;
+	void *hint = &number;
+	map(source_util, dest_util, &add_function, hint);
+
+	assert(*(int *)(dest_util.base)-*(int *)(source_util.base) == 2);
+	assert(*(int *)source_util.base + 2 == *(int *)(dest_util.base));
+
+};
+
+void test_int_forEach(){
+	ArrayUtil util = create(4,4);
+	int a =3,b = 2, c = 1, d = 4;
+	insert_element(&util,&a,0);
+	insert_element(&util,&b,1);
+	insert_element(&util,&c,2);
+	insert_element(&util,&d,3);
+
+	int number = 3;
+	void *hint = &number;
+	forEach(util, &multiply_power, hint);
+
+	assert(*(int *)util.base == 27);
+	assert(b != 8);
+	assert(d == 4);
+};
+
+void test_int_reduce(){
+	printf("hello\n");
+	ArrayUtil util = create(4,4);
+	int a =3,b = 2, c = 1, d = 4;
+	insert_element(&util,&a,0);
+	insert_element(&util,&b,1);
+	insert_element(&util,&c,2);
+	insert_element(&util,&d,3);
+
+	int value = 0;
+	void *initial_val = &value;
+	void *hint = NULL;
+
+	int *result = (int *)reduce(util,&sum_of_element, hint, initial_val);
+	printf("%d\n", *result);
+	assert(*result == 10);
+
+}
 
 //===================================test for character elements in array=========================================
 
@@ -244,7 +319,6 @@ void test_count_match_char(){
 	void *hint1 = &second_char;
 	count_char = count(elements, &isMathChar, hint1);
 	assert(count_char == 2);
-
-}
+};
 
 

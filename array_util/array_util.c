@@ -94,7 +94,33 @@ int filter(ArrayUtil util, MatchFunc *match, void * hint, void** destination, in
 	return length;
 };
 
-void map(ArrayUtil, ArrayUtil, ConvertFunc *, void *){
-
+void map(ArrayUtil source, ArrayUtil destination, ConvertFunc *convert, void *hint){
+	void *source_item;
+	void *destination_item;
+	for (int i = 0; i < source.length; ++i)
+	{
+		source_item = source.base+(i*source.typeSize);
+		destination_item = destination.base+(i*destination.typeSize);
+		convert(hint, source_item, destination_item);
+	}
 };
 
+void forEach(ArrayUtil util, OperationFunc *operation, void *hint){
+	void *item;
+	for (int i = 0; i < util.length; ++i)
+	{
+		item = util.base+(i*util.typeSize);
+		operation(hint, item);
+	}
+};
+
+void *reduce(ArrayUtil util, ReducerFunc *reducer, void *hint, void *initialValue){
+	void *previousItem;
+	for (int i = 0; i < util.length; ++i)
+	{
+		previousItem = util.base+(i*util.typeSize);
+		reducer(hint, previousItem, initialValue);
+	}
+	printf("give me reducable thing%d\n",*(int *)initialValue);
+	return initialValue;
+}
