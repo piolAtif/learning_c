@@ -32,14 +32,7 @@ function extractTests(fileContent) {
 };
 
 function printFormattedErr(err) {
-    err = err.split(/function|file|line/);
-    var errMessage = [
-        err[0],
-        "Test Name : " + err[1].trim(),
-        "File Name : " + err[2].substr(3),
-        "Line No.  : " + err[3].match(/\d+/g).join()
-    ]
-    console.log(errMessage.join('\n'));
+    process.stderr.write(err);
 }
 
 function printResult(test, allTests, summary) {

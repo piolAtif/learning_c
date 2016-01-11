@@ -3,8 +3,6 @@ typedef void(ConvertFunc)(void *, void *,void *);
 typedef void(OperationFunc)(void *,void *);
 typedef void *(ReducerFunc)(void *,void *,void *);
 
-
-
 typedef struct{
 	void *base;
 	int typeSize;

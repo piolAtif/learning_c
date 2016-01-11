@@ -251,7 +251,6 @@ void test_int_forEach(){
 };
 
 void test_int_reduce(){
-	printf("hello\n");
 	ArrayUtil util = create(4,4);
 	int a =3,b = 2, c = 1, d = 4;
 	insert_element(&util,&a,0);
@@ -264,7 +263,6 @@ void test_int_reduce(){
 	void *hint = NULL;
 
 	int *result = (int *)reduce(util,&sum_of_element, hint, initial_val);
-	printf("%d\n", *result);
 	assert(*result == 10);
 
 }

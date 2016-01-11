@@ -121,6 +121,5 @@ void *reduce(ArrayUtil util, ReducerFunc *reducer, void *hint, void *initialValu
 		previousItem = util.base+(i*util.typeSize);
 		reducer(hint, previousItem, initialValue);
 	}
-	printf("give me reducable thing%d\n",*(int *)initialValue);
 	return initialValue;
 }
