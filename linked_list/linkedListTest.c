@@ -1,5 +1,10 @@
 #include <assert.h>
 #include "linkedList.h"
+#define intType *(int *)
+
+void increase(void *ele){
+	++intType(ele);
+}
 
 void test_create_linked_list(){
 	LinkedList list = createList();
@@ -8,3 +13,90 @@ void test_create_linked_list(){
 	assert(list.last == NULL);
 	assert(list.length == 0);
 };	
+
+void test_add_first_to_list(){
+	LinkedList list = createList();
+	int number = 23;
+	void *ptr = &number;
+	int length = add_to_list(&list, ptr);
+
+	assert(length == 1);
+	assert(intType(list.first->value) == intType(list.last->value));
+	assert(intType(list.first->value) == 23);
+};
+
+void test_add_to_list(){
+	LinkedList list = createList();
+	int number = 44;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	int number2 = 33;
+	void *ptr2 = &number2;
+	int length2 = add_to_list(&list, ptr2);
+
+	assert(length2 == 2);
+	assert(intType(list.last->value) == 33);
+};
+
+void test_get_first_element(){
+	LinkedList list = createList();
+	int number = 44;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	int number2 = 33;
+	void *ptr2 = &number2;
+	add_to_list(&list, ptr2);
+
+	int number3 = 23;
+	void *ptr3 = &number2;
+	add_to_list(&list, ptr2);
+
+	void *first_element = get_first_element(list);
+
+	assert(intType(first_element) == 44);
+};
+
+void test_get_last_element(){
+	LinkedList list = createList();
+	int number = 44;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	int number2 = 33;
+	void *ptr2 = &number2;
+	add_to_list(&list, ptr2);
+
+	int number3 = 23;
+	void *ptr3 = &number3;
+	add_to_list(&list, ptr3);
+
+	void *last_element = get_last_element(list);
+	assert(intType(last_element) == 23);
+};
+
+
+
+void test_forEach(){
+	LinkedList list = createList();
+	int number = 44;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	int number2 = 33;
+	void *ptr2 = &number2;
+	add_to_list(&list, ptr2);
+
+	int number3 = 23;
+	void *ptr3 = &number3;
+	add_to_list(&list, ptr3);
+
+	forEach(list, increase);
+	assert(intType(list.first->value) == 45);
+	traverse(list);
+	assert(intType(list.last->value) == 24);
+}
+
+
+
