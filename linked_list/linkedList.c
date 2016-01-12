@@ -39,6 +39,18 @@ void *get_last_element(LinkedList list){
 	return list.last->value;
 }
 
+void * getElementAt(LinkedList list, int number){
+	if(list.length == 0){
+		return NULL;
+	}
+	Elements *ptr = list.first;
+	for (int i = 0; i < number; ++i)
+	{
+		ptr = ptr->next;	
+	}
+	return ptr->value;
+};
+
 void traverse(LinkedList list){
 	Elements *e = list.first;
 	for (int i = 0; i < list.length; ++i)

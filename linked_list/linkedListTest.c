@@ -76,8 +76,6 @@ void test_get_last_element(){
 	assert(intType(last_element) == 23);
 };
 
-
-
 void test_forEach(){
 	LinkedList list = createList();
 	int number = 44;
@@ -96,6 +94,31 @@ void test_forEach(){
 	assert(intType(list.first->value) == 45);
 	traverse(list);
 	assert(intType(list.last->value) == 24);
+};
+
+void test_getElementAt(){
+	LinkedList list = createList();
+	int number = 44;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	int number2 = 33;
+	void *ptr2 = &number2;
+	add_to_list(&list, ptr2);
+
+	int number3 = 23;
+	void *ptr3 = &number3;
+	add_to_list(&list, ptr3);
+
+	void *ele = getElementAt(list, 2);
+	assert(intType(ele) == 23);
+
+	void *ele2 = getElementAt(list,1);
+	assert(intType(ele2) == 33);
+
+	void *ele3 = getElementAt(list,0);
+	assert(intType(ele3) == 44);
+
 }
 
 
