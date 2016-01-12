@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "linkedList.h"
+#define _TYPEINT_ *(int *)
 
 LinkedList createList(void){
 	LinkedList list;	
@@ -39,7 +40,7 @@ void *get_last_element(LinkedList list){
 	return list.last->value;
 }
 
-void * getElementAt(LinkedList list, int number){
+void *getElementAt(LinkedList list, int number){
 	if(list.length == 0){
 		return NULL;
 	}
@@ -58,7 +59,7 @@ void traverse(LinkedList list){
 		printf("%d\n", *(int *)e->value);
 		e = e->next;
 	}
-}
+};
 
 void forEach(LinkedList list_of_elements, ElementProcessor e){
 	Elements *ele = list_of_elements.first;
@@ -67,5 +68,17 @@ void forEach(LinkedList list_of_elements, ElementProcessor e){
 		e(ele->value);
 		ele = ele->next;
 	}
-}
+};
+
+int indexOf(LinkedList list, void *element){
+	Elements *ptr = list.first;
+	for (int i = 0; i < list.length; ++i)
+	{
+		if(_TYPEINT_(ptr->value) == _TYPEINT_(element)){
+			return i;
+		}
+		ptr = ptr->next;
+	}
+	return -1;
+};
 

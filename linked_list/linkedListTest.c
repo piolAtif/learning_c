@@ -118,7 +118,44 @@ void test_getElementAt(){
 
 	void *ele3 = getElementAt(list,0);
 	assert(intType(ele3) == 44);
+};
 
+void test_indexOf(){
+	LinkedList list = createList();
+	int number = 12;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	int number2 = 33;
+	void *ptr2 = &number2;
+	add_to_list(&list, ptr2);
+
+	int number3 = 23;
+	void *ptr3 = &number3;
+	add_to_list(&list, ptr3);
+
+	int number4 = 44;
+	void *ptr4 = &number4;
+	add_to_list(&list, ptr4);
+
+	int number5 = 23;
+	void *ptr5 = &number5;
+	add_to_list(&list, ptr5);
+
+	int number6 = 22;
+	void *ptr6 = &number6;
+	add_to_list(&list, ptr6);
+
+	int value = 23;
+	void *ptr_value = &value;
+
+	int index_of_element = indexOf(list, ptr_value);
+	assert(index_of_element == 2);
+
+	int value2 = 44;
+	void *ptr_value2 = &value2;
+	int index = indexOf(list, ptr_value2);
+	assert(index == 3);
 }
 
 
