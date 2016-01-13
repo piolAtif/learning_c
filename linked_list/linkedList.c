@@ -115,5 +115,17 @@ void *deleteElementAt(LinkedList *list, int index){
 	return val;
 };
 
+int asArray(LinkedList list, void **match_arr, int maxElements){
+	Elements *e = list.first;
+	int length = 0;
+	for (int i = 0; i < maxElements; ++i)
+	{
+		match_arr[i] = e->value;
+		e = e->next;
+		length++;
+	}
+	return length;
+};
+
 
 

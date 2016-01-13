@@ -3,6 +3,13 @@
 #include "linkedList.h"
 #define intType *(int *)
 
+void print_arr(void **arr, int length){
+	for (int i = 0; i < length; ++i)
+	{
+		printf("%d\n", intType(arr[i]));
+	}
+}
+
 void increase(void *ele){
 	++intType(ele);
 }
@@ -248,7 +255,26 @@ void test_deleteElementAt_for_lastElement(){
 
 	void *ele = getElementAt(list,1);
 	assert(list.length == 2);
-}
+};
 
+void test_asArray(){
+	LinkedList list = createList();
+	int number = 12;
+	add_to_list(&list, &number);
 
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int a[10];
+	void *arr_ptr = &a;
+	int maxLength = 2;
+
+	int length_of_arr = asArray(list, arr_ptr, maxLength);
+	assert(maxLength == 2);
+
+	print_arr(arr_ptr,2);
+};
 
