@@ -82,3 +82,38 @@ int indexOf(LinkedList list, void *element){
 	return -1;
 };
 
+void *deleteElementAt(LinkedList *list, int index){
+	void *val;
+	Elements *loc = (Elements *)malloc(sizeof(Elements));
+	Elements *ptr = (Elements *)malloc(sizeof(Elements));
+	ptr = list->first;
+	if((list->length == 0 )|| (list->length<=index)){
+		return NULL;
+	}
+	
+	else if(list->first->next == NULL){
+		val = ptr->value;
+		free(ptr);	
+	}
+	else{
+		loc = ptr->next;
+		for (int i = 1; i < index; ++i)
+		{	
+			loc = loc->next;
+			ptr = ptr->next;
+		};
+		val = loc->value;
+		if(index == list->length-1){
+			ptr->next = NULL;
+		}
+		else{
+			ptr->next = loc->next;
+		}
+		free(loc);	
+	}
+	list->length--;
+	return val;
+};
+
+
+

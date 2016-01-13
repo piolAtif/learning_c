@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <assert.h>
 #include "linkedList.h"
 #define intType *(int *)
@@ -156,6 +157,97 @@ void test_indexOf(){
 	void *ptr_value2 = &value2;
 	int index = indexOf(list, ptr_value2);
 	assert(index == 3);
+};
+
+void test_deleteElementAt(){
+	LinkedList list = createList();
+	int number = 12;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	int number2 = 33;
+	void *ptr2 = &number2;
+	add_to_list(&list, ptr2);
+
+	int number3 = 23;
+	void *ptr3 = &number3;
+	add_to_list(&list, ptr3);
+
+	int number4 = 44;
+	void *ptr4 = &number4;
+	add_to_list(&list, ptr4);
+
+	int number5 = 23;
+	void *ptr5 = &number5;
+	add_to_list(&list, ptr5);
+
+	void *delete_element = deleteElementAt(&list, 2);
+	assert(intType(delete_element) == 23);
+
+	void *ele = getElementAt(list,2);
+	assert(intType(ele) == 44);
+}
+
+void test_deleteElementAt_for_null_element(){
+	LinkedList list = createList();
+	void *delete_element = deleteElementAt(&list, 1);
+
+	assert(delete_element == NULL);
+	assert(list.length == 0);
+};
+
+void test_deleteElementAt_if_listLength_one(){
+	LinkedList list = createList();
+	int number = 12;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	assert(list.length == 1);
+
+	void *delete_element = deleteElementAt(&list, 0);
+	assert(intType(delete_element) == 12);
+
+	void *ele = getElementAt(list,0);
+	assert(list.length == 0);
+};
+
+void test_deleteElementAt_if_indexNotRange(){
+	LinkedList list = createList();
+	int number = 12;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	int number2 = 33;
+	void *ptr2 = &number2;
+	add_to_list(&list, ptr2);
+
+	int number3 = 23;
+	void *ptr3 = &number3;
+	add_to_list(&list, ptr3);
+
+	void *delete_element = deleteElementAt(&list, 3);
+	assert(delete_element == NULL);
+};
+
+void test_deleteElementAt_for_lastElement(){
+	LinkedList list = createList();
+	int number = 12;
+	void *ptr = &number;
+	add_to_list(&list, ptr);
+
+	int number2 = 33;
+	void *ptr2 = &number2;
+	add_to_list(&list, ptr2);
+
+	int number3 = 23;
+	void *ptr3 = &number3;
+	add_to_list(&list, ptr3);
+
+	void *delete_element = deleteElementAt(&list, 2);
+	assert(intType(delete_element) == 23);
+
+	void *ele = getElementAt(list,1);
+	assert(list.length == 2);
 }
 
 
