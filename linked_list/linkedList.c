@@ -127,5 +127,60 @@ int asArray(LinkedList list, void **match_arr, int maxElements){
 	return length;
 };
 
+LinkedList filter(LinkedList list, MatchFunc m, void *hint){
+	Elements *e = list.first;
+	LinkedList filtered_list = createList();
+	for (int i = 0; i < list.length; ++i)
+	{
+		if(m(hint, e->value)){
+			add_to_list(&filtered_list, e->value);
+		}
+		e = e->next;
+	}
+	return filtered_list;
+};
 
+LinkedList reverse(LinkedList list){
+	LinkedList reverse_list = createList();
+
+	reverse_list.first = list.last;
+	reverse_list.last = list.first;
+	for (int i = list.length; i > 0 ; --i)
+	{
+		Elements *e = list.first;
+		for (int j = 1; j < i; j++)
+		{
+			e = e->next;
+		}
+		if(e->value){
+			add_to_list(&reverse_list, e->value);
+		}
+	}
+	return reverse_list;
+};
+
+LinkedList map(LinkedList list, ConvertFunc con, void * hint){
+	LinkedList dest_list = createList();
+	Elements *source = list.first;
+	for (int i = 0; i < list.length; ++i)
+	{
+		void *destination = malloc(sizeof(void *));
+		con(hint, source->value, destination);
+		add_to_list(&dest_list, destination);
+		source = source->next;
+	};
+	return dest_list;
+};
+
+LinkedList reduce(LinkedList list, Reducer reducer, void *hint, void *initialValue){
+	Elements *previous = list.first;
+	LinkedList new_list = createList();
+	for (int i = 0; i < list.length; ++i)
+	{
+		initialValue = reducer(hint, previous->value, initialValue);
+		previous = previous->next;
+	}
+	add_to_list(&new_list, initialValue);
+	return new_list;
+};
 

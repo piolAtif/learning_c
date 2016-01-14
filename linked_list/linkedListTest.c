@@ -3,6 +3,27 @@
 #include "linkedList.h"
 #define intType *(int *)
 
+int isGreater(void *hint, void *item){
+	int limitation = intType(hint);
+	int val_to_compare = intType(item);
+	if(limitation<val_to_compare){
+		return 1;
+	}
+	return 0;
+};
+
+void *average_of_sum(void *hint, void *previousItem, void *initialValue){
+	intType(initialValue) = intType(initialValue)+intType(previousItem);
+	return initialValue;
+};
+
+void sum(void *hint, void *source, void *dest){
+	int auddend = intType(hint);
+	int auggend = intType(source);
+	int add = auddend+auggend;
+	intType(dest) = add;
+};
+
 void print_arr(void **arr, int length){
 	for (int i = 0; i < length; ++i)
 	{
@@ -254,6 +275,7 @@ void test_deleteElementAt_for_lastElement(){
 	assert(intType(delete_element) == 23);
 
 	void *ele = getElementAt(list,1);
+	assert(intType(ele) == 33);
 	assert(list.length == 2);
 };
 
@@ -277,4 +299,239 @@ void test_asArray(){
 
 	print_arr(arr_ptr,2);
 };
+
+void test_filter_isGreater(){
+	LinkedList list = createList();
+
+	int number = 12;
+	add_to_list(&list, &number);
+
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int number4 = 44;
+	add_to_list(&list, &number4);
+
+	int number5 = 23;
+	add_to_list(&list, &number5);
+
+	int value = 30;
+	void *hint = &value;
+
+	LinkedList filtered = filter(list, isGreater, hint);
+
+	void *value1 = getElementAt(filtered, 0);
+	assert(intType(value1) == 33);
+
+	void *value2 = getElementAt(filtered, 1);
+	assert(intType(value2) == 44);
+};
+
+void test_reverse_using_traverse(){
+	LinkedList list = createList();
+
+	int number = 12;
+	add_to_list(&list, &number);
+
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int number4 = 44;
+	add_to_list(&list, &number4);
+
+	int number5 = 23;
+	add_to_list(&list, &number5);
+
+	LinkedList reverse_list = reverse(list);
+	traverse(reverse_list);
+	void *reverse_val = getElementAt(reverse_list, 0);
+
+	assert(intType(reverse_val) == 23);
+};
+
+void test_reverse_using_getElementAt(){
+	LinkedList list = createList();
+
+	int number = 12;
+	add_to_list(&list, &number);
+
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int number4 = 44;
+	add_to_list(&list, &number4);
+
+	int number5 = 23;
+	add_to_list(&list, &number5);
+
+	LinkedList reverse_list = reverse(list);
+	void *get_reverse_ele = getElementAt(reverse_list, 1);
+	assert(intType(get_reverse_ele) == 44);
+
+	void *get_reverse_ele2 = getElementAt(reverse_list,3);
+	assert(intType(get_reverse_ele2) == 33);
+
+	void *get_reverse_ele3 = getElementAt(reverse_list, 2);
+	assert(intType(get_reverse_ele3) == 23);
+};
+
+void test_reverse_using_getFirstElement(){
+	LinkedList list = createList();
+
+	int number = 12;
+	add_to_list(&list, &number);
+
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int number4 = 44;
+	add_to_list(&list, &number4);
+
+	int number5 = 23;
+	add_to_list(&list, &number5);
+
+	LinkedList reverse_list = reverse(list);
+	void *get_reverse_ele = get_first_element(reverse_list);
+	assert(intType(get_reverse_ele) == 23);	
+};
+
+void test_reverse_using_getLastElement(){
+	LinkedList list = createList();
+
+	int number = 12;
+	add_to_list(&list, &number);
+
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int number4 = 44;
+	add_to_list(&list, &number4);
+
+	int number5 = 23;
+	add_to_list(&list, &number5);
+
+	LinkedList reverse_list = reverse(list);
+	void *get_reverse_ele = get_last_element(reverse_list);
+	assert(intType(get_reverse_ele) == 12);	
+};
+
+void test_map_using_traverse(){
+	LinkedList list = createList();
+
+	int number = 12;
+	add_to_list(&list, &number);
+
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int number4 = 44;
+	add_to_list(&list, &number4);
+
+	int number5 = 23;
+	add_to_list(&list, &number5);
+
+	int value = 2;
+	LinkedList map_element = map(list, sum, &value);
+	traverse(map_element);
+};
+
+void test_map_using_getElement(){
+	LinkedList list = createList();
+
+	int number = 12;
+	add_to_list(&list, &number);
+
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int number4 = 44;
+	add_to_list(&list, &number4);
+
+	int number5 = 23;
+	add_to_list(&list, &number5);
+
+	int value = 2;
+	LinkedList map_element = map(list, sum, &value);
+
+	void *map_ele = getElementAt(map_element, 0);
+	assert(intType(map_ele) == 14);
+
+	void *map_ele2 = getElementAt(map_element, 2);
+	assert(intType(map_ele2) == 25);
+
+	void *map_ele3 = getElementAt(map_element, 4);
+	assert(intType(map_ele3) == 25);
+};
+
+void test_reduce_using_traverse(){
+	LinkedList list = createList();
+
+	int number = 12;
+	add_to_list(&list, &number);
+
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int number4 = 44;
+	add_to_list(&list, &number4);
+
+	int number5 = 23;
+	add_to_list(&list, &number5);
+
+	int hint = 0;
+	int value = 0;
+	LinkedList reduce_list = reduce(list, average_of_sum, &hint, &value);
+	traverse(reduce_list);
+};
+
+void test_reduce_using_getElement(){
+	LinkedList list = createList();
+
+	int number = 12;
+	add_to_list(&list, &number);
+
+	int number2 = 33;
+	add_to_list(&list, &number2);
+
+	int number3 = 23;
+	add_to_list(&list, &number3);
+
+	int number4 = 44;
+	add_to_list(&list, &number4);
+
+	int number5 = 23;
+	add_to_list(&list, &number5);
+
+	int hint = 0;
+	int value = 0;
+
+	LinkedList reduce_list = reduce(list, average_of_sum, &hint, &value);
+	void *reduce_ele = getElementAt(reduce_list, 0);
+	assert(intType(reduce_ele) == 135);
+};
+
 
