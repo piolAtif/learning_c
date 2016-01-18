@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "linkedList.h"
-#define _TYPEINT_ *(int *)
 
 LinkedList createList(void){
 	LinkedList list;	
@@ -41,7 +40,7 @@ void *get_last_element(LinkedList list){
 }
 
 void *getElementAt(LinkedList list, int number){
-	if(list.length == 0){
+	if(list.length == 0 || number>list.length){
 		return NULL;
 	}
 	Elements *ptr = list.first;
@@ -52,11 +51,29 @@ void *getElementAt(LinkedList list, int number){
 	return ptr->value;
 };
 
-void traverse(LinkedList list){
+void traverse_int(LinkedList list){
 	Elements *e = list.first;
 	for (int i = 0; i < list.length; ++i)
 	{
-		printf("%d\n", *(int *)e->value);
+		printf("%d\n", _TYPEINT_(e->value));
+		e = e->next;
+	}
+};
+
+void traverse_char(LinkedList list){
+	Elements *e = list.first;
+	for (int i = 0; i < list.length; ++i)
+	{
+		printf("%c\n", _TYPECHAR_(e->value));
+		e = e->next;
+	}
+};
+
+void traverse_float(LinkedList list){
+	Elements *e = list.first;
+	for (int i = 0; i < list.length; ++i)
+	{
+		printf("%.2f\n",_TYPEFLOAT_(e->value));
 		e = e->next;
 	}
 };

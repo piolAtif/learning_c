@@ -1,3 +1,7 @@
+#define _TYPEINT_ *(int *)
+#define _TYPECHAR_ *(char *)
+#define _TYPEFLOAT_ *(float *)
+
 typedef int (MatchFunc)(void *, void *);
 typedef void (ConvertFunc)(void *, void *, void *);
 typedef void *(Reducer)(void *, void *, void *);
@@ -20,7 +24,11 @@ int add_to_list(LinkedList *,void *);
 void *get_first_element(LinkedList);
 void *get_last_element(LinkedList);
 void forEach(LinkedList, ElementProcessor);
-void traverse(LinkedList);
+
+void traverse_int(LinkedList);
+void traverse_char(LinkedList);
+void traverse_float(LinkedList);
+
 void *getElementAt(LinkedList, int);
 int indexOf(LinkedList, void *);
 void *deleteElementAt(LinkedList *, int);
